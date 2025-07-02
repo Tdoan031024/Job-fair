@@ -1,0 +1,380 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #8bb1d8;
+}
+
+/* Container chung */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Masthead */
+.masthead {
+    position: relative;
+    height: 50vh;
+    background: linear-gradient(135deg, rgba(44, 62, 80, 0.7), rgba(52, 152, 219, 0.7)),
+        url('<?php echo isset($_SESSION["system"]["about_background"]) ? htmlspecialchars($_SESSION["system"]["about_background"]) : "../../assets/images/default-about-bg.jpg"; ?>');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.masthead h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.divider {
+    width: 60px;
+    height: 3px;
+    background-color: #fff;
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* Section Backgrounds */
+.about-content-section,
+.mission-vision-section,
+.values-section,
+.stats-section,
+.contact-section {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Card Styles */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Mission Vision */
+.mission-vision-icon,
+.value-icon,
+.contact-icon,
+.contact-modal-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.mission-vision-title,
+.value-title,
+.contact-title,
+.contact-modal-title {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.mission-vision-text,
+.value-description,
+.contact-info,
+.contact-modal-info p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Stats Section */
+.stat-number {
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+/* Floating Contact Button */
+.floating-contact {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.contact-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.contact-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+    animation: none;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+.contact-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.contact-button:hover+.contact-tooltip {
+    opacity: 1;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-button {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.scroll-button:hover {
+    background-color: #5a6268;
+    transform: scale(1.1);
+}
+
+.scroll-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.scroll-button:hover+.scroll-tooltip {
+    opacity: 1;
+}
+
+/* Contact Modal */
+.contact-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-modal.show {
+    display: flex;
+}
+
+.contact-modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.contact-modal.show .contact-modal-content {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.contact-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.contact-modal-close:hover {
+    color: #333;
+}
+
+.contact-modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contact-modal-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.contact-modal.show .contact-modal-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-modal-item:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.contact-modal-item:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.contact-modal-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.contact-modal-item:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.contact-modal-icon {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-right: 15px;
+}
+
+.contact-modal-info h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.contact-modal-info p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .masthead h1 {
+        font-size: 2rem;
+    }
+
+    .masthead {
+        height: 40vh;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .contact-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .masthead h1 {
+        font-size: 1.5rem;
+    }
+
+    .masthead {
+        height: 30vh;
+    }
+
+    .contact-button,
+    .scroll-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .contact-tooltip,
+    .scroll-tooltip {
+        right: 50px;
+    }
+}
