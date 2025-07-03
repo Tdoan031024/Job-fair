@@ -92,8 +92,11 @@
                         </div>
                         <div class="d-flex justify-content-end align-items-center mt-3">
                             <button class="btn btn-primary view-detail" data-id="<?php echo $row['id'] ?>">
-                                <i class="fa fa-info-circle mr-1"></i> Xem chi tiết
+                                <a href="index.php?page=view_company&id=<?php echo $row['id'] ?>"
+                                    class="btn btn-primary">Xem
+                                    chi tiết</a>
                             </button>
+
                         </div>
                     </div>
                 </div>

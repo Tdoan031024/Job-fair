@@ -46,21 +46,27 @@ class Event
 
     public function getEventById($id)
     {
+        // Kiểm tra và chuyển $id thành số nguyên để tránh SQL Injection
+        $id = (int)$id;
+        if ($id <= 0) {
+            error_log("Lỗi: ID sự kiện không hợp lệ: $id");
+            return false;
+        }
+
         $query = "SELECT e.*, v.venue 
                   FROM events e 
                   LEFT JOIN venue v ON v.id = e.venue_id 
-                  WHERE e.id = ?";
-        $stmt = $this->conn->prepare($query);
-        if ($stmt === false) {
-            error_log("Lỗi: Không thể chuẩn bị truy vấn trong getEventById: " . $this->conn->error);
+                  WHERE e.id = $id AND e.type = 1";
+        $result = $this->conn->query($query);
+        if (!$result) {
+            error_log("Lỗi: Không thể lấy sự kiện với ID $id: " . $this->conn->error);
             return false;
         }
-        $stmt->bind_param("i", $id);
-        if (!$stmt->execute()) {
-            error_log("Lỗi: Thực thi truy vấn thất bại trong getEventById: " . $stmt->error);
+        if ($result->num_rows === 0) {
+            error_log("Không tìm thấy sự kiện với ID $id và type = 1");
             return false;
         }
-        return $stmt->get_result()->fetch_assoc();
+        return $result->fetch_assoc();
     }
 
     public function getTotalEvents()

@@ -9,6 +9,9 @@ include '../views/layouts/header.php';
 
 <head>
     <link rel="stylesheet" href="../assets/css/home.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <section class="hero-section">
@@ -83,34 +86,6 @@ include '../views/layouts/header.php';
     <?php endif; ?>
 </section>
 
-<section class="stats-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="stat-card loading">
-                    <i class="fas fa-calendar-alt stat-icon"></i>
-                    <div class="stat-number"><?php echo isset($total_events) ? $total_events : '0'; ?></div>
-                    <div class="stat-label">Sự Kiện</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="stat-card loading">
-                    <i class="fas fa-building stat-icon"></i>
-                    <div class="stat-number"><?php echo isset($total_companies) ? $total_companies : '0'; ?></div>
-                    <div class="stat-label">Doanh Nghiệp</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="stat-card loading">
-                    <i class="fas fa-briefcase stat-icon"></i>
-                    <div class="stat-number"><?php echo isset($total_jobs) ? $total_jobs : '0'; ?></div>
-                    <div class="stat-label">Vị Trí Tuyển Dụng</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section class="events-section py-5 bg-light">
     <div class="container">
         <!-- Tiêu đề section -->
@@ -149,12 +124,10 @@ include '../views/layouts/header.php';
                             <span><?php echo date("F d, Y h:i A", strtotime($row['schedule'])); ?></span>
                         </div>
                         <p class="card-text text-muted flex-grow-1">
-                            <?php echo htmlspecialchars(strip_tags(substr($desc, 0, 150))); ?>...
+                            <?php echo strip_tags($desc) ?>
                         </p>
-                        <button class="btn btn-primary mt-auto read_more"
-                            data-id="<?php echo htmlspecialchars($row['id']); ?>">
-                            Đọc thêm
-                        </button>
+                        <a href="index.php?page=view_event&id=<?php echo $row['id'] ?>" class="btn btn-primary">Xem chi
+                            tiết</a>
                     </div>
                 </div>
             </div>
@@ -242,6 +215,34 @@ include '../views/layouts/header.php';
             <a href="index.php?page=companies" class="btn btn-outline-primary btn-lg px-4 py-2">
                 Xem Tất Cả Doanh Nghiệp
             </a>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section py-5 bg-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="stat-box shadow-sm p-4 rounded">
+                    <i class="fas fa-calendar-alt fa-2x text-primary mb-2"></i>
+                    <h3 class="fw-bold mb-1"><?php echo isset($total_events) ? $total_events : '0'; ?></h3>
+                    <p class="text-muted">Sự kiện đã tổ chức</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="stat-box shadow-sm p-4 rounded">
+                    <i class="fas fa-building fa-2x text-success mb-2"></i>
+                    <h3 class="fw-bold mb-1"><?php echo isset($total_companies) ? $total_companies : '0'; ?></h3>
+                    <p class="text-muted">Doanh nghiệp tham gia</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box shadow-sm p-4 rounded">
+                    <i class="fas fa-briefcase fa-2x text-warning mb-2"></i>
+                    <h3 class="fw-bold mb-1"><?php echo isset($total_jobs) ? $total_jobs : '0'; ?></h3>
+                    <p class="text-muted">Việc làm đang tuyển</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>

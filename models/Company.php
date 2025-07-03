@@ -12,10 +12,8 @@ class Company
         $this->conn = $db;
     }
 
-
     public function getCompanies($search = '', $linh_vuc = '', $quy_mo = '', $limit = 0)
     {
-        // Tạm thời bỏ điều kiện trang_thai = 1 để kiểm tra dữ liệu
         $query = "SELECT d.*, l.ten_linh_vuc 
                   FROM doanh_nghiep d 
                   LEFT JOIN linh_vuc l ON d.linh_vuc_id = l.id";
@@ -27,7 +25,7 @@ class Company
             $types .= "s";
             $params[] = "%$search%";
         } else {
-            $query .= " WHERE 1=1"; // Đảm bảo cú pháp WHERE hợp lệ
+            $query .= " WHERE 1=1";
         }
         if (!empty($linh_vuc)) {
             $query .= " AND d.linh_vuc_id = ?";
@@ -85,6 +83,24 @@ class Company
         return $stmt->get_result()->fetch_assoc();
     }
 
+    public function getJobsByCompanyId($id)
+    {
+        $query = "SELECT * FROM viec_lam WHERE doanh_nghiep_id = ? AND trang_thai = 1 ORDER BY ngay_tao DESC";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt === false) {
+            error_log("Lỗi: Không thể chuẩn bị truy vấn trong getJobsByCompanyId: " . $this->conn->error);
+            return false;
+        }
+        $stmt->bind_param("i", $id);
+        if (!$stmt->execute()) {
+            error_log("Lỗi: Thực thi truy vấn thất bại trong getJobsByCompanyId: " . $stmt->error);
+            return false;
+        }
+        $result = $stmt->get_result();
+        error_log("getJobsByCompanyId trả về " . ($result ? $result->num_rows : 0) . " bản ghi");
+        return $result;
+    }
+
     public function getIndustries()
     {
         $query = "SELECT * FROM linh_vuc ORDER BY ten_linh_vuc ASC";
@@ -98,7 +114,7 @@ class Company
 
     public function getTotalCompanies()
     {
-        $query = "SELECT COUNT(*) as count FROM doanh_nghiep"; // Bỏ trang_thai = 1 để kiểm tra
+        $query = "SELECT COUNT(*) as count FROM doanh_nghiep";
         $result = $this->conn->query($query);
         if (!$result) {
             error_log("Lỗi: Truy vấn getTotalCompanies thất bại: " . $this->conn->error);
@@ -135,3 +151,4 @@ class Company
         return $result;
     }
 }
+?>

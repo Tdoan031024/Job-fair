@@ -17,6 +17,11 @@ class CompanyController {
 
     public function view($id) {
         $company = $this->companyModel->getCompanyById($id);
+        if (!$company) {
+            include_once '../views/errors/404.php';
+            return;
+        }
+        $jobs = $this->companyModel->getJobsByCompanyId($id);
         include_once '../views/company/view.php';
     }
 }

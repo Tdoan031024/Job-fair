@@ -1,57 +1,65 @@
-#portfolio .img-fluid {
-    width: calc(100%);
-    height: 30vh;
-    z-index: -1;
-    position: relative;
-    padding: 1em;
-}
-
-.event-list {
-    cursor: pointer;
-}
-
-span.hightlight {
-    background: yellow;
-}
-
-.banner {
+.event-list-item {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 26vh;
-    width: calc(30%);
+    flex-direction: row;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-.banner img {
-    width: calc(100%);
-    height: calc(100%);
-    cursor: pointer;
+.event-list-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-.event-list {
-    cursor: pointer;
-    border: unset;
-    flex-direction: inherit;
+.event-banner {
+    width: 35%;
+    min-height: 200px;
+    max-height: 220px;
+    overflow: hidden;
 }
 
-.event-list .banner {
-    width: calc(40%)
+.event-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.event-list .card-body {
-    width: calc(60%)
+.event-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.event-list .banner img {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    min-height: 50vh;
+.event-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #004085;
+    margin-bottom: 10px;
 }
 
-span.hightlight {
-    background: yellow;
+.event-info {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.6;
 }
 
-.banner {
-    min-height: calc(100%)
+.event-info i {
+    margin-right: 6px;
+    color: #888;
+}
+
+.event-actions {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.btn-detail {
+    padding: 8px 18px;
+    font-weight: 500;
+    border-radius: 6px;
 }
