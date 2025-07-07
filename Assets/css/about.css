@@ -5,8 +5,11 @@
     box-sizing: border-box;
 }
 
+body, h1, h2, h3, h4, h5, h6, p, a, span, div, input, textarea, button, th, td, label, ul, ol, li, .card, .stat-number, .value-title, .contact-title, .contact-modal-title, .contact-modal-info, .stat-label {
+    font-family: 'Roboto', sans-serif !important;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: #333;
     background-color: #8bb1d8;

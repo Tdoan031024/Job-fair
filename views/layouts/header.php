@@ -37,9 +37,10 @@ $username = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_nam
     <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300italic,400,400italic,700,700italic"
-        rel="stylesheet">
+        rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 
     <!-- CSS Libraries -->
     <link href="../assets/css/jquery.datetimepicker.min.css" rel="stylesheet">
@@ -54,6 +55,12 @@ $username = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_nam
     <link href="../assets/css/styles.css" rel="stylesheet">
     <link href="../assets/css/header.css" rel="stylesheet">
     <link href="../assets/css/profile-icon.css" rel="stylesheet">
+
+    <style>
+        body, h1, h2, h3, h4, h5, h6, p, .card, .stat-number, .value-title, .contact-title, .contact-modal-title, .contact-modal-info, .stat-label {
+            font-family: 'Roboto', sans-serif !important;
+        }
+    </style>
 
 </head>
 

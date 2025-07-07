@@ -59,6 +59,7 @@
     backdrop-filter: blur(12px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    font-family: 'Roboto', sans-serif;
 }
 
 .hero-title:hover {
@@ -76,6 +77,7 @@
     backdrop-filter: blur(10px);
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+    font-family: 'Roboto', sans-serif;
 }
 
 .hero-subtitle:hover {
@@ -95,6 +97,7 @@
     margin: 0 15px 15px 0;
     display: inline-block;
     text-decoration: none;
+    font-family: 'Roboto', sans-serif;
 }
 
 .hero-btn-primary {
@@ -451,11 +454,13 @@
 
 .cta-title {
     margin-bottom: 25px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .cta-description {
     margin-bottom: 50px;
     opacity: 0.9;
+    font-family: 'Roboto', sans-serif;
 }
 
 .cta-btn {
@@ -467,6 +472,7 @@
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    font-family: 'Roboto', sans-serif;
 }
 
 .cta-btn:hover {
@@ -620,6 +626,7 @@
     text-align: center;
     border-bottom: 3px solid #3b82f6;
     padding-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .contact-modal-item {
@@ -658,11 +665,13 @@
 
 .contact-modal-info h4 {
     margin-bottom: 8px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .contact-modal-info p {
     margin: 0;
     opacity: 0.9;
+    font-family: 'Roboto', sans-serif;
 }
 
 .contact-form-btn {
@@ -681,6 +690,7 @@
     overflow: hidden;
     z-index: 1;
     min-width: 220px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .contact-form-btn::before {

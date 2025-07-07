@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 include '../views/layouts/header.php';
 ?>
 <link rel="stylesheet" href="../assets/css/about.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 
 <body class="about-page">
     <header class="masthead">

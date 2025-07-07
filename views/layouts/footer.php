@@ -115,16 +115,7 @@
 </footer>
 
 
-<div class="col-md-4 mb-4">
-    <h4 class="mb-3">Fanpage</h4>
-    <div class="fb-page" data-href="https://www.facebook.com/hotrosinhvienssc.huit" data-tabs="timeline"
-        data-width="340" data-height="220" data-small-header="false" data-adapt-container-width="true"
-        data-hide-cover="false" data-show-facepile="true">
-        <blockquote cite="https://www.facebook.com/hotrosinhvienssc.huit" class="fb-xfbml-parse-ignore">
-            <a href="https://www.facebook.com/hotrosinhvienssc.huit">HUIT SSC Fanpage</a>
-        </blockquote>
-    </div>
-</div>
+
 
 </body>
 
