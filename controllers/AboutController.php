@@ -38,7 +38,7 @@ class AboutController {
 
             // Lấy số sinh viên
             $students_count = 0;
-            $result = $this->db->query("SELECT COUNT(*) as count FROM sinh_vien WHERE trang_thai = 1");
+            $result = $this->db->query("SELECT COUNT(*) as count FROM sinh_vien");
             if ($result) {
                 $students_count = $result->fetch_assoc()['count'];
             }

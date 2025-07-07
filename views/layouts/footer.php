@@ -21,8 +21,8 @@
                 <div class="social-links mt-3">
                     <a href="https://www.facebook.com/hotrosinhvienssc.huit" class="facebook" aria-label="Facebook"><i
                             class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@DHCongthuong" class="youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/dh_congthuong/" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
 
