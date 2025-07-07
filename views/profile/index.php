@@ -1,4 +1,18 @@
-<?php include '../views/layouts/header.php'; ?>
+<?php 
+include '../views/layouts/header.php'; 
+
+// Kiểm tra xem người dùng đã đăng nhập chưa
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
+    header('Location: index.php?page=login');
+    exit;
+}
+
+// Xử lý thông báo từ quá trình tải lên
+$error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
+$success = isset($_GET['success']) ? htmlspecialchars($_GET['success']) : null;
+
+// Biến $user_info được truyền từ ProfileController::index()
+?>
 
 <style>
 body {
@@ -94,28 +108,26 @@ body {
                     <h3>Thông Tin Cá Nhân</h3>
                 </div>
                 <div class="card-body profile-info">
-                    <?php if (isset($_SESSION['success_message'])): ?>
-                    <div class="alert alert-success">
-                        <?php echo htmlspecialchars($_SESSION['success_message']); unset($_SESSION['success_message']); ?>
-                    </div>
+                    <?php if ($success): ?>
+                    <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
                     <?php endif; ?>
-                    <?php if (isset($_SESSION['error_message'])): ?>
-                    <div class="alert alert-danger">
-                        <?php echo htmlspecialchars($_SESSION['error_message']); unset($_SESSION['error_message']); ?>
-                    </div>
+                    <?php if ($error): ?>
+                    <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
                     <?php endif; ?>
 
+                    <?php if (isset($user_info['status']) && $user_info['status'] === 'error'): ?>
+                    <div class="alert alert-danger"><?php echo htmlspecialchars($user_info['message']); ?></div>
+                    <?php else: ?>
                     <div class="profile-row">
                         <div class="profile-left text-center">
-                            <?php if (isset($user_info['avatar']) && $user_info['avatar']): ?>
+                            <?php if (isset($user_info['avatar']) && $user_info['avatar'] && $_SESSION['user_role'] === 'sinh_vien'): ?>
                             <img src="../Assets/images/profile/<?php echo htmlspecialchars($user_info['avatar']); ?>"
                                 alt="Avatar" class="profile-avatar">
-                            <?php elseif (isset($user_info['logo']) && $user_info['logo']): ?>
-                            <img src="<?php echo htmlspecialchars($user_info['logo']); ?>" alt="Logo"
-                                class="profile-avatar">
+                            <?php elseif (isset($user_info['logo']) && $user_info['logo'] && $_SESSION['user_role'] === 'doanh_nghiep'): ?>
+                            <img src="../Assets/images/profile/<?php echo htmlspecialchars($user_info['logo']); ?>"
+                                alt="Logo" class="profile-avatar">
                             <?php else: ?>
-                            <img src="../../assets/images/default-avatar.png" alt="Default Avatar"
-                                class="profile-avatar">
+                            <img src="../assets/images/default-avatar.png" alt="Default Avatar" class="profile-avatar">
                             <?php endif; ?>
                             <h4><?php echo htmlspecialchars(isset($user_info['ho_ten']) ? $user_info['ho_ten'] : (isset($user_info['ten_cong_ty']) ? $user_info['ten_cong_ty'] : 'Chưa cập nhật')); ?>
                             </h4>
@@ -125,7 +137,7 @@ body {
                                 <?php echo htmlspecialchars($user_info['so_dien_thoai'] ?? 'Chưa cập nhật'); ?></p>
                         </div>
                         <div class="profile-right">
-                            <?php if (isset($role) && $role === 'sinh_vien'): ?>
+                            <?php if ($_SESSION['user_role'] === 'sinh_vien'): ?>
                             <h4>Thông tin sinh viên</h4>
                             <p><strong>Trường học:</strong>
                                 <?php echo htmlspecialchars($user_info['truong_hoc'] ?? 'Chưa cập nhật'); ?></p>
@@ -133,7 +145,7 @@ body {
                                 <?php echo htmlspecialchars($user_info['chuyen_nganh'] ?? 'Chưa cập nhật'); ?></p>
                             <p><strong>Địa chỉ:</strong>
                                 <?php echo htmlspecialchars($user_info['dia_chi'] ?? 'Chưa cập nhật'); ?></p>
-                            <?php elseif (isset($role) && $role === 'doanh_nghiep'): ?>
+                            <?php elseif ($_SESSION['user_role'] === 'doanh_nghiep'): ?>
                             <h4>Thông tin doanh nghiệp</h4>
                             <p><strong>Địa chỉ:</strong>
                                 <?php echo htmlspecialchars($user_info['dia_chi'] ?? 'Chưa cập nhật'); ?></p>
@@ -146,27 +158,30 @@ body {
                             <?php endif; ?>
 
                             <!-- Phần CV -->
+                            <?php if ($_SESSION['user_role'] === 'sinh_vien'): ?>
                             <div class="cv-section">
                                 <h5>CV của bạn</h5>
-                                <?php if (isset($user_info['cv']) && !empty($user_info['cv'])): ?>
+                                <?php if (isset($user_info['cv_pdf']) && !empty($user_info['cv_pdf'])): ?>
                                 <div class="cv-container">
                                     <embed
-                                        src="../Assets/images/profile<?php echo htmlspecialchars($user_info['cv']); ?>"
+                                        src="../Assets/images/profile/<?php echo htmlspecialchars($user_info['cv_pdf']); ?>"
                                         type="application/pdf" width="100%" height="100%">
                                 </div>
-                                <p><a href="../Assets/images/profile/<?php echo htmlspecialchars($user_info['cv']); ?>"
+                                <p><a href="../Assets/files/cv/<?php echo htmlspecialchars($user_info['cv_pdf']); ?>"
                                         target="_blank" class="btn btn-custom mt-2">Tải về CV</a></p>
                                 <?php else: ?>
-                                <p>Chưa có CV. <a href="#" class="btn btn-custom">Tải lên CV</a></p>
+                                <p>Chưa có CV.</p>
                                 <?php endif; ?>
                             </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
                     <div class="text-center mt-4">
                         <a href="index.php?page=logout" class="btn btn-danger">Đăng xuất</a>
-                        <a href="#" class="btn btn-custom ml-2">Chỉnh sửa thông tin</a>
+                        <a href="index.php?page=edit_profile" class="btn btn-custom ml-2">Chỉnh sửa thông tin</a>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

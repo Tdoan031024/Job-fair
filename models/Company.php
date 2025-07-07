@@ -85,7 +85,7 @@ class Company
 
     public function getJobsByCompanyId($id)
     {
-        $query = "SELECT * FROM viec_lam WHERE doanh_nghiep_id = ? AND trang_thai = 1 ORDER BY ngay_tao DESC";
+        $query = "SELECT * FROM viec_lam WHERE doanh_nghiep_id = ? ORDER BY ngay_tao DESC";
         $stmt = $this->conn->prepare($query);
         if ($stmt === false) {
             error_log("Lỗi: Không thể chuẩn bị truy vấn trong getJobsByCompanyId: " . $this->conn->error);
@@ -125,7 +125,7 @@ class Company
 
     public function getTotalJobs()
     {
-        $query = "SELECT COUNT(*) as count FROM viec_lam WHERE trang_thai = 1";
+        $query = "SELECT COUNT(*) as count FROM viec_lam ";
         $result = $this->conn->query($query);
         if (!$result) {
             error_log("Lỗi: Truy vấn getTotalJobs thất bại: " . $this->conn->error);
@@ -139,9 +139,9 @@ class Company
         $query = "SELECT d.*, l.ten_linh_vuc 
               FROM doanh_nghiep d 
               LEFT JOIN linh_vuc l ON d.linh_vuc_id = l.id 
-              WHERE d.trang_thai = 1 
+               
               ORDER BY d.id ASC 
-              LIMIT 3";
+            ";
         $result = $this->conn->query($query);
         if (!$result) {
             error_log("Lỗi: Truy vấn getTopCompanies thất bại: " . $this->conn->error);

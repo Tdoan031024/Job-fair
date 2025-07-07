@@ -24,7 +24,7 @@ class AuthModel {
         ];
 
         foreach ($tables as $table => $columns) {
-            $query = "SELECT " . implode(', ', $columns) . " FROM $table WHERE email = ? AND trang_thai = 1";
+            $query = "SELECT " . implode(', ', $columns) . " FROM $table WHERE email = ?";
             $stmt = $this->conn->prepare($query);
             if ($stmt === false) {
                 error_log("Lỗi: Không thể chuẩn bị truy vấn trong authenticate ($table): " . $this->conn->error);
@@ -49,14 +49,15 @@ class AuthModel {
             }
             $stmt->close();
         }
-        return ['status' => 'error', 'message' => 'Email không tồn tại hoặc tài khoản chưa được kích hoạt.'];
+        return ['status' => 'error', 'message' => 'Email không tồn tại.'];
     }
 
     public function register($data, $role) {
         $data = array_map('trim', $data);
 
-        if (empty($data['ho_ten']) || empty($data['email']) || empty($data['mat_khau'])) {
-            return ['status' => 'error', 'message' => 'Vui lòng điền đầy đủ thông tin bắt buộc.'];
+        // Kiểm tra các trường bắt buộc chung
+        if (empty($data['email']) || empty($data['mat_khau'])) {
+            return ['status' => 'error', 'message' => 'Vui lòng điền đầy đủ thông tin bắt buộc (email, mật khẩu).'];
         }
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -71,8 +72,11 @@ class AuthModel {
         $hashed_password = password_hash($data['mat_khau'], PASSWORD_DEFAULT);
 
         if ($role === 'sinh_vien') {
-            $query = "INSERT INTO sinh_vien (ho_ten, email, mat_khau, so_dien_thoai, truong_hoc, chuyen_nganh, dia_chi, trang_thai) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
+            if (empty($data['ho_ten'])) {
+                return ['status' => 'error', 'message' => 'Vui lòng điền họ và tên.'];
+            }
+            $query = "INSERT INTO sinh_vien (ho_ten, email, mat_khau, so_dien_thoai, truong_hoc, chuyen_nganh, dia_chi) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($query);
             if ($stmt === false) {
                 error_log("Lỗi: Không thể chuẩn bị truy vấn trong register (sinh_vien): " . $this->conn->error);
@@ -88,8 +92,11 @@ class AuthModel {
                 $data['dia_chi']
             );
         } elseif ($role === 'doanh_nghiep') {
-            $query = "INSERT INTO doanh_nghiep (ten_cong_ty, email, mat_khau, so_dien_thoai, dia_chi, website, quy_mo, linh_vuc_id, trang_thai) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
+            if (empty($data['ten_cong_ty']) || empty($data['dia_chi']) || empty($data['so_dien_thoai'])) {
+                return ['status' => 'error', 'message' => 'Vui lòng điền đầy đủ thông tin bắt buộc (tên công ty, địa chỉ, số điện thoại).'];
+            }
+            $query = "INSERT INTO doanh_nghiep (ten_cong_ty, email, mat_khau, so_dien_thoai, dia_chi, website, quy_mo, linh_vuc_id) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($query);
             if ($stmt === false) {
                 error_log("Lỗi: Không thể chuẩn bị truy vấn trong register (doanh_nghiep): " . $this->conn->error);

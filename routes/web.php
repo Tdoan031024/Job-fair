@@ -11,6 +11,7 @@ require_once '../controllers/ContactController.php';
 require_once '../controllers/AboutController.php';
 require_once '../controllers/BookingController.php';
 require_once '../controllers/AuthController.php';
+require_once '../controllers/ProfileController.php';
 
 $db = (new Database())->getConnection();
 
@@ -60,9 +61,12 @@ switch ($page) {
         $controller->register();
         break;
     case 'profile':
-        require_once '../controllers/ProfileController.php';
         $controller = new ProfileController($db);
         $controller->index();
+        break;
+    case 'edit_profile':
+        $controller = new ProfileController($db);
+        $controller->edit();
         break;
     case 'logout':
         $controller = new AuthController($db);
@@ -70,7 +74,14 @@ switch ($page) {
         break;
     default:
         header("HTTP/1.0 404 Not Found");
-        include_once '../views/errors/404.php';
+        $error_404_path = '../views/errors/404.php';
+        if (file_exists($error_404_path)) {
+            include_once $error_404_path;
+        } else {
+            echo "<h1>404 - Trang Không Tìm Thấy</h1>";
+            echo "<p>Xin lỗi, trang bạn đang tìm kiếm không tồn tại.</p>";
+            echo '<a href="index.php?page=home">Quay lại trang chủ</a>';
+        }
         break;
 }
 ?>
