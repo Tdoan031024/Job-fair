@@ -68,6 +68,20 @@ switch ($page) {
         $controller = new ProfileController($db);
         $controller->edit();
         break;
+    case 'add_job':
+        $controller = new CompanyController($db);
+        $controller->addJob();
+        break;
+    case 'edit_job':
+        $controller = new CompanyController($db);
+        $id = isset($_GET['id']) ? $_GET['id'] : 0;
+        $controller->editJob($id);
+        break;
+    case 'delete_job':
+        $controller = new CompanyController($db);
+        $id = isset($_GET['id']) ? $_GET['id'] : 0;
+        $controller->deleteJob($id);
+        break;
     case 'logout':
         $controller = new AuthController($db);
         $controller->logout();

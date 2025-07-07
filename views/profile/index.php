@@ -1,104 +1,16 @@
 <?php 
 include '../views/layouts/header.php'; 
 
-// Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
     header('Location: index.php?page=login');
     exit;
 }
 
-// Xử lý thông báo từ quá trình tải lên
 $error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : null;
 $success = isset($_GET['success']) ? htmlspecialchars($_GET['success']) : null;
 
-// Biến $user_info được truyền từ ProfileController::index()
 ?>
-
-<style>
-body {
-    padding-top: 140px !important;
-    background-color: #f8f9fa;
-}
-
-.profile-card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.profile-header {
-    background-color: #e67e22;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-.profile-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid #fff;
-    margin-bottom: 15px;
-}
-
-.profile-info {
-    padding: 20px;
-}
-
-.profile-info h4 {
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-.profile-info p {
-    color: #34495e;
-    margin-bottom: 10px;
-}
-
-.profile-info .cv-section {
-    margin-top: 20px;
-}
-
-.profile-info .cv-container {
-    max-width: 100%;
-    height: 500px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    overflow: auto;
-}
-
-.btn-custom {
-    background-color: #e67e22;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-}
-
-.btn-custom:hover {
-    background-color: #d35400;
-    color: white;
-}
-
-@media (min-width: 768px) {
-    .profile-row {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .profile-left {
-        flex: 1;
-        padding-right: 20px;
-    }
-
-    .profile-right {
-        flex: 2;
-    }
-}
-</style>
+<link rel="stylesheet" href="../assets/css/profile.css">
 
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -164,7 +76,7 @@ body {
                                 <?php if (isset($user_info['cv_pdf']) && !empty($user_info['cv_pdf'])): ?>
                                 <div class="cv-container">
                                     <embed
-                                        src="../Assets/images/profile/<?php echo htmlspecialchars($user_info['cv_pdf']); ?>"
+                                        src="../Assets/files/cv/<?php echo htmlspecialchars($user_info['cv_pdf']); ?>"
                                         type="application/pdf" width="100%" height="100%">
                                 </div>
                                 <p><a href="../Assets/files/cv/<?php echo htmlspecialchars($user_info['cv_pdf']); ?>"
@@ -172,6 +84,44 @@ body {
                                 <?php else: ?>
                                 <p>Chưa có CV.</p>
                                 <?php endif; ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <!-- Phần công việc -->
+                            <?php if ($_SESSION['user_role'] === 'doanh_nghiep' && $jobs && $jobs->num_rows > 0): ?>
+                            <div class="company-jobs mt-5">
+                                <h3 class="section-title">Vị trí đang tuyển dụng</h3>
+                                <a href="index.php?page=add_job" class="btn btn-custom mb-3">Thêm việc làm mới</a>
+                                <div class="list-group">
+                                    <?php while ($job = $jobs->fetch_assoc()): ?>
+                                    <div class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">
+                                                <?php echo htmlspecialchars($job['tieu_de'] ?? 'Chưa cập nhật'); ?></h5>
+                                            <small><?php echo date('d/m/Y', strtotime($job['ngay_tao'] ?? date('Y-m-d'))); ?></small>
+                                        </div>
+                                        <p class="mb-1">
+                                            <?php echo htmlspecialchars($job['mo_ta'] ?? 'Chưa cập nhật'); ?></p>
+                                        <small><i class="fa fa-map-marker"></i>
+                                            <?php echo htmlspecialchars($job['vi_tri'] ?? 'Chưa cập nhật'); ?></small>
+                                        <div class="mt-2">
+                                            <a href="index.php?page=view_job&id=<?php echo $job['id']; ?>"
+                                                class="btn btn-custom btn-sm">Xem chi tiết</a>
+                                            <a href="index.php?page=edit_job&id=<?php echo $job['id']; ?>"
+                                                class="btn btn-custom btn-sm">Chỉnh sửa</a>
+                                            <a href="index.php?page=delete_job&id=<?php echo $job['id']; ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Bạn có chắc chắn muốn xóa việc làm này?');">Xóa</a>
+                                        </div>
+                                    </div>
+                                    <?php endwhile; ?>
+                                </div>
+                            </div>
+                            <?php elseif ($_SESSION['user_role'] === 'doanh_nghiep'): ?>
+                            <div class="company-jobs mt-5">
+                                <h3 class="section-title">Vị trí đang tuyển dụng</h3>
+                                <p>Chưa có việc làm nào. <a href="index.php?page=add_job"
+                                        class="btn btn-custom btn-sm">Thêm việc làm mới</a></p>
                             </div>
                             <?php endif; ?>
                         </div>
