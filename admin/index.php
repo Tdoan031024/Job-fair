@@ -68,7 +68,16 @@
   </div>
   <main id="view-panel" >
       <?php $page = isset($_GET['page']) ? $_GET['page'] :'home'; ?>
-  	<?php include $page.'.php' ?>
+  	<?php
+    switch ($page) {
+        case 'cv_guide_admin':
+            include 'cv_guide_admin.php';
+            break;
+        default:
+            include $page.'.php';
+            break;
+    }
+  	?>
   	
 
   </main>

@@ -19,6 +19,7 @@
 				<div class="collapse" id="businessCollapse">
 					<a href="index.php?page=business" class="nav-item nav-business-list pl-4"><span class='icon-field'><i class="fa fa-list"></i></span> Danh sách doanh nghiệp</a>
 					<a href="index.php?page=jobs" class="nav-item nav-jobs pl-4"><span class='icon-field'><i class="fa fa-briefcase"></i></span> Quản lý việc làm</a>
+					<a href="index.php?page=cv_guide_admin" class="nav-item nav-cv_guide_admin pl-4"><span class='icon-field'><i class="fa fa-file-alt"></i></span> Hướng dẫn viết CV</a>
 					<a href="index.php?page=quanly_linhvuc" class="nav-item nav-quanly_linhvuc pl-4"><span class='icon-field'><i class="fa fa-tags"></i></span> Quản lý lĩnh vực</a>
 				</div>
 				<a href="index.php?page=message" class="nav-item nav-message"><span class='icon-field'><i class="fa fa-envelope"></i></span> Tin nhắn</a>

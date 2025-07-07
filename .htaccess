@@ -1,14 +1,5 @@
 RewriteEngine On
 RewriteBase /
-
-# Route mọi request không phải file hoặc folder vào public/index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ public/index.php [L,QSA]
-RewriteCond %{REQUEST_URI} !\.pdf$
-
-
-# Cấp quyền cho PDF
-<FilesMatch "\.(pdf)$">
-    Require all granted
-</FilesMatch>

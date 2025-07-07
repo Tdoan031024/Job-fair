@@ -8,14 +8,11 @@ class SystemSetting {
 
     public function getSettings() {
         $query = "SELECT * FROM system_settings LIMIT 1";
-        $result = $this->conn->query($query);
-        $row = $result ? $result->fetch_array() : null;
+        $result = $this->conn->query($query)->fetch_array();
         $settings = [];
-        if ($row) {
-            foreach ($row as $key => $value) {
-                if (!is_numeric($key)) {
-                    $settings[$key] = $value;
-                }
+        foreach ($result as $key => $value) {
+            if (!is_numeric($key)) {
+                $settings[$key] = $value;
             }
         }
         return $settings;

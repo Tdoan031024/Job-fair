@@ -5,10 +5,21 @@
 ?>
 </style>
 
+<header class="masthead">
+    <div class="container-fluid h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-end mb-4 page-title">
+                <h1 class="text-white font-weight-bold">Liên hệ với chúng tôi</h1>
+                <hr class="divider my-4" />
+            </div>
+        </div>
+    </div>
+</header>
+
 <div class="container mt-3 pt-2">
     <div class="contact-container">
         <div class="image-slider">
-            <img src="../assets/images/IEC/lienhe1.jpg" class="slider-image" alt="Liên hệ 1">
+            <img src="../assets/images/lienhe1.jpg" class="slider-image" alt="Liên hệ 1">
         </div>
         <div class="contact-form">
             <h3 class="text-center mb-4">Kết nối - Chia sẻ - Đồng hành</h3>

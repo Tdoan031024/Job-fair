@@ -681,4 +681,149 @@ Class Action {
 			return json_encode(['status'=>'error', 'msg'=>$stmt->error]);
 		}
 	}
+
+    public function get_cv_guide_blogs() {
+        $res = $this->db->query("SELECT * FROM cv_guide_blog ORDER BY ngay_tao DESC");
+        $data = [];
+        while($row = $res->fetch_assoc()) $data[] = $row;
+        return $data;
+    }
+    public function save_cv_guide_blog() {
+        $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+        $tieu_de = $this->db->real_escape_string($_POST['tieu_de']);
+        $tom_tat = $this->db->real_escape_string($_POST['tom_tat']);
+        $noi_dung = $this->db->real_escape_string($_POST['noi_dung']);
+        $trang_thai = isset($_POST['trang_thai']) ? intval($_POST['trang_thai']) : 1;
+        $hinh_anh = '';
+        $old_image = '';
+        if($id > 0) {
+            // Lấy ảnh cũ trước khi update
+            $res_img = $this->db->query("SELECT hinh_anh FROM cv_guide_blog WHERE ma_bai_viet=$id");
+            if($res_img && $res_img->num_rows > 0) {
+                $old_image = $res_img->fetch_assoc()['hinh_anh'];
+            }
+        }
+        if(isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['tmp_name']) {
+            $fname = time().'_'.$_FILES['hinh_anh']['name'];
+            move_uploaded_file($_FILES['hinh_anh']['tmp_name'], 'assets/uploads/'.$fname);
+            $hinh_anh = $fname;
+            // Nếu update và có ảnh cũ, xóa file ảnh cũ
+            if($id > 0 && $old_image && file_exists('assets/uploads/'.$old_image)) {
+                @unlink('assets/uploads/'.$old_image);
+            }
+        } else if(isset($_POST['hinh_anh_old'])) {
+            $hinh_anh = $this->db->real_escape_string($_POST['hinh_anh_old']);
+        }
+        if($id > 0) {
+            $sql = "UPDATE cv_guide_blog SET tieu_de='$tieu_de', tom_tat='$tom_tat', noi_dung='$noi_dung', trang_thai=$trang_thai";
+            if($hinh_anh) $sql .= ", hinh_anh='$hinh_anh'";
+            $sql .= " WHERE ma_bai_viet=$id";
+        } else {
+            $sql = "INSERT INTO cv_guide_blog (tieu_de, tom_tat, noi_dung, hinh_anh, trang_thai) VALUES ('$tieu_de', '$tom_tat', '$noi_dung', '$hinh_anh', $trang_thai)";
+        }
+        $res = $this->db->query($sql);
+        return $res ? 1 : 0;
+    }
+    public function delete_cv_guide_blog() {
+        $id = intval($_POST['id']);
+        // Lấy tên file ảnh trước khi xóa
+        $res_img = $this->db->query("SELECT hinh_anh FROM cv_guide_blog WHERE ma_bai_viet=$id");
+        $img = ($res_img && $res_img->num_rows > 0) ? $res_img->fetch_assoc()['hinh_anh'] : '';
+        $res = $this->db->query("DELETE FROM cv_guide_blog WHERE ma_bai_viet=$id");
+        if($res && $img && file_exists('assets/uploads/'.$img)) {
+            @unlink('assets/uploads/'.$img);
+        }
+        return $res ? 1 : 0;
+    }
+    public function get_cv_guide_samples() {
+        $res = $this->db->query("SELECT * FROM cv_guide_sample ORDER BY ngay_tao DESC");
+        $data = [];
+        while($row = $res->fetch_assoc()) $data[] = $row;
+        return $data;
+    }
+    public function save_cv_guide_sample() {
+        $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+        $tieu_de = $this->db->real_escape_string($_POST['tieu_de']);
+        $mo_ta = $this->db->real_escape_string($_POST['mo_ta']);
+        $hinh_anh = '';
+        $tep_tin = '';
+        if(isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['tmp_name']) {
+            $fname = time().'_'.$_FILES['hinh_anh']['name'];
+            move_uploaded_file($_FILES['hinh_anh']['tmp_name'], 'assets/uploads/'.$fname);
+            $hinh_anh = $fname;
+        } else if(isset($_POST['hinh_anh_old'])) {
+            $hinh_anh = $this->db->real_escape_string($_POST['hinh_anh_old']);
+        }
+        if(isset($_FILES['tep_tin']) && $_FILES['tep_tin']['tmp_name']) {
+            $fname2 = time().'_'.$_FILES['tep_tin']['name'];
+            move_uploaded_file($_FILES['tep_tin']['tmp_name'], 'assets/uploads/'.$fname2);
+            $tep_tin = $fname2;
+        } else if(isset($_POST['tep_tin_old'])) {
+            $tep_tin = $this->db->real_escape_string($_POST['tep_tin_old']);
+        }
+        if($id > 0) {
+            $sql = "UPDATE cv_guide_sample SET tieu_de='$tieu_de', mo_ta='$mo_ta'";
+            if($hinh_anh) $sql .= ", hinh_anh='$hinh_anh'";
+            if($tep_tin) $sql .= ", tep_tin='$tep_tin'";
+            $sql .= " WHERE ma_mau_cv=$id";
+        } else {
+            $sql = "INSERT INTO cv_guide_sample (tieu_de, mo_ta, hinh_anh, tep_tin) VALUES ('$tieu_de', '$mo_ta', '$hinh_anh', '$tep_tin')";
+        }
+        $res = $this->db->query($sql);
+        return $res ? 1 : 0;
+    }
+    public function delete_cv_guide_sample() {
+        $id = intval($_POST['id']);
+        $res = $this->db->query("DELETE FROM cv_guide_sample WHERE ma_mau_cv=$id");
+        return $res ? 1 : 0;
+    }
+    public function get_cv_guide_videos() {
+        $res = $this->db->query("SELECT * FROM cv_guide_video ORDER BY ngay_tao DESC");
+        $data = [];
+        while($row = $res->fetch_assoc()) $data[] = $row;
+        return $data;
+    }
+    public function save_cv_guide_video() {
+        $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+        $tieu_de = $this->db->real_escape_string($_POST['tieu_de']);
+        $link = $this->db->real_escape_string($_POST['link']);
+        if($id > 0) {
+            $sql = "UPDATE cv_guide_video SET tieu_de='$tieu_de', link='$link' WHERE id=$id";
+        } else {
+            $sql = "INSERT INTO cv_guide_video (tieu_de, link) VALUES ('$tieu_de', '$link')";
+        }
+        $res = $this->db->query($sql);
+        return $res ? 1 : 0;
+    }
+    public function delete_cv_guide_video() {
+        $id = intval($_POST['id']);
+        $res = $this->db->query("DELETE FROM cv_guide_video WHERE id=$id");
+        return $res ? 1 : 0;
+    }
+    public function get_cv_guide_images() {
+        $res = $this->db->query("SELECT * FROM cv_guide_blog_images ORDER BY id DESC");
+        $data = [];
+        while($row = $res->fetch_assoc()) $data[] = $row;
+        return $data;
+    }
+    public function save_cv_guide_image() {
+        $ma_bai_viet = isset($_POST['ma_bai_viet']) ? intval($_POST['ma_bai_viet']) : 0;
+        $hinh_anh = '';
+        if(isset($_FILES['hinh_anh']) && $_FILES['hinh_anh']['tmp_name']) {
+            $fname = time().'_'.$_FILES['hinh_anh']['name'];
+            move_uploaded_file($_FILES['hinh_anh']['tmp_name'], 'assets/uploads/'.$fname);
+            $hinh_anh = $fname;
+        }
+        if($ma_bai_viet > 0 && $hinh_anh) {
+            $sql = "INSERT INTO cv_guide_blog_images (ma_bai_viet, hinh_anh) VALUES ($ma_bai_viet, '$hinh_anh')";
+            $res = $this->db->query($sql);
+            return $res ? 1 : 0;
+        }
+        return 0;
+    }
+    public function delete_cv_guide_image() {
+        $id = intval($_POST['id']);
+        $res = $this->db->query("DELETE FROM cv_guide_blog_images WHERE id=$id");
+        return $res ? 1 : 0;
+    }
 }

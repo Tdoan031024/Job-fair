@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json; charset=utf-8');
+include 'db_connect.php';
 ob_start();
 $action = $_GET['action'];
 include 'admin_class.php';
@@ -148,59 +150,61 @@ if($action == 'get_companies') {
     $search = isset($_POST['search']) ? $conn->real_escape_string($_POST['search']) : '';
     $linh_vuc = isset($_POST['linh_vuc']) ? intval($_POST['linh_vuc']) : 0;
     $quy_mo = isset($_POST['quy_mo']) ? $conn->real_escape_string($_POST['quy_mo']) : '';
-    
-    // Xây dựng query với prepared statement để tránh SQL injection
-    $query = "SELECT d.*, l.ten_linh_vuc FROM doanh_nghiep d 
-              LEFT JOIN linh_vuc l ON d.linh_vuc_id = l.id 
-              WHERE d.trang_thai = 1";
-    
+    $page = isset($_POST['page']) ? max(1, intval($_POST['page'])) : 1;
+    $per_page = isset($_POST['per_page']) ? intval($_POST['per_page']) : 8;
+    $offset = ($page - 1) * $per_page;
+    $count_query = "SELECT COUNT(*) as total FROM doanh_nghiep d WHERE d.trang_thai = 1";
+    $query = "SELECT d.* FROM doanh_nghiep d WHERE d.trang_thai = 1";
     $conditions = [];
     $params = [];
     $types = '';
-    
     if (!empty($search)) {
         $conditions[] = "d.ten_cong_ty LIKE ?";
         $params[] = "%$search%";
         $types .= 's';
     }
-    
     if (!empty($linh_vuc)) {
         $conditions[] = "d.linh_vuc_id = ?";
         $params[] = $linh_vuc;
         $types .= 'i';
     }
-    
     if (!empty($quy_mo)) {
         $conditions[] = "d.quy_mo = ?";
         $params[] = $quy_mo;
         $types .= 's';
     }
-    
     if (!empty($conditions)) {
-        $query .= " AND " . implode(" AND ", $conditions);
+        $where = " AND " . implode(" AND ", $conditions);
+        $query .= $where;
+        $count_query .= $where;
     }
-    
-    $query .= " ORDER BY d.ten_cong_ty ASC";
-    
+    $query .= " ORDER BY d.ten_cong_ty ASC LIMIT $per_page OFFSET $offset";
+    $stmt_count = $conn->prepare($count_query);
+    if (!empty($params)) {
+        $stmt_count->bind_param($types, ...$params);
+    }
+    $stmt_count->execute();
+    $result_count = $stmt_count->get_result();
+    $total = $result_count->fetch_assoc()['total'];
+    $total_pages = ceil($total / $per_page);
     $stmt = $conn->prepare($query);
     if (!empty($params)) {
         $stmt->bind_param($types, ...$params);
     }
     $stmt->execute();
     $doanh_nghiep = $stmt->get_result();
-    
     ob_start();
     ?>
     <?php if($doanh_nghiep->num_rows > 0): ?>
         <?php while($row = $doanh_nghiep->fetch_assoc()): ?>
-            <div class="col-md-12">
-                <div class="card company-list">
+            <div class="col-12 col-md-6 mb-4 d-flex align-items-stretch">
+                <div class="card company-list w-100">
                     <div class="d-flex">
                         <div class="logo-container">
                             <?php if(!empty($row['logo'])): ?>
-                                <img src="admin/assets/uploads/<?php echo $row['logo'] ?>" alt="<?php echo $row['ten_cong_ty'] ?>">
+                            <img src="../Assets/images/companies_logo/<?php echo $row['logo'] ?>" alt="<?php echo $row['ten_cong_ty'] ?>">
                             <?php else: ?>
-                                <img src="admin/assets/uploads/default_company.png" alt="Logo mặc định">
+                            <img src="assets/uploads/default_company.png" alt="Logo mặc định">
                             <?php endif; ?>
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
@@ -211,13 +215,13 @@ if($action == 'get_companies') {
                                 <p><i class="fa fa-envelope"></i> <?php echo $row['email'] ?></p>
                                 <p><i class="fa fa-globe"></i> <a href="<?php echo $row['website'] ?>" target="_blank"><?php echo $row['website'] ?></a></p>
                                 <div class="mt-2">
-                                    <span class="industry"><?php echo $row['ten_linh_vuc'] ?></span>
+                                    <span class="industry"><?php echo $row['linh_vuc'] ?></span>
                                     <span class="size"><?php echo $row['quy_mo'] ?></span>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end align-items-center mt-3">
                                 <button class="btn btn-primary view-detail" data-id="<?php echo $row['id'] ?>">
-                                    <i class="fa fa-info-circle mr-1"></i> Xem chi tiết
+                                    <a href="index.php?page=view_company&id=<?php echo $row['id'] ?>" class="btn btn-primary">Xem chi tiết</a>
                                 </button>
                             </div>
                         </div>
@@ -232,7 +236,13 @@ if($action == 'get_companies') {
     <?php endif; ?>
     <?php
     $html = ob_get_clean();
-    echo json_encode(['status' => 'success', 'html' => $html]);
+    echo json_encode([
+        'status' => 'success',
+        'html' => $html,
+        'total' => $total,
+        'total_pages' => $total_pages,
+        'current_page' => $page
+    ]);
 }
 
 if($action == 'get_jobs'){
@@ -436,4 +446,56 @@ if($action == 'delete_banner'){
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Có lỗi xảy ra khi xóa banner']);
     }
+}
+
+if($action == 'get_cv_guide_blogs'){
+    $data = $crud->get_cv_guide_blogs();
+    echo json_encode($data);
+}
+if($action == 'save_cv_guide_blog'){
+    $save = $crud->save_cv_guide_blog();
+    echo $save;
+}
+if($action == 'delete_cv_guide_blog'){
+    $del = $crud->delete_cv_guide_blog();
+    echo $del;
+}
+
+if($action == 'get_cv_guide_samples'){
+    $data = $crud->get_cv_guide_samples();
+    echo json_encode($data);
+}
+if($action == 'save_cv_guide_sample'){
+    $save = $crud->save_cv_guide_sample();
+    echo $save;
+}
+if($action == 'delete_cv_guide_sample'){
+    $del = $crud->delete_cv_guide_sample();
+    echo $del;
+}
+
+if($action == 'get_cv_guide_videos'){
+    $data = $crud->get_cv_guide_videos();
+    echo json_encode($data);
+}
+if($action == 'save_cv_guide_video'){
+    $save = $crud->save_cv_guide_video();
+    echo $save;
+}
+if($action == 'delete_cv_guide_video'){
+    $del = $crud->delete_cv_guide_video();
+    echo $del;
+}
+
+if($action == 'get_cv_guide_images'){
+    $data = $crud->get_cv_guide_images();
+    echo json_encode($data);
+}
+if($action == 'save_cv_guide_image'){
+    $save = $crud->save_cv_guide_image();
+    echo $save;
+}
+if($action == 'delete_cv_guide_image'){
+    $del = $crud->delete_cv_guide_image();
+    echo $del;
 }

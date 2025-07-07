@@ -1,10 +1,10 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+session_start(); // Khởi động session
 include '../views/layouts/header.php';
 ?>
 <link rel="stylesheet" href="../assets/css/about.css">
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 
 <body class="about-page">
     <header class="masthead">
@@ -134,25 +134,25 @@ include '../views/layouts/header.php';
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <div class="stat-item card h-100 border-0 shadow-sm text-center p-4 animate-card">
-                        <span class="stat-number display-4 fw-bold text-primary"><?= $stats['students_count'] ?>+</span>
+                        <span class="stat-number display-4 fw-bold text-primary">500+</span>
                         <div class="stat-label text-muted">Sinh Viên Tham Gia</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="stat-item card h-100 border-0 shadow-sm text-center p-4 animate-card">
-                        <span class="stat-number display-4 fw-bold text-primary"><?= $stats['partners_count'] ?>+</span>
+                        <span class="stat-number display-4 fw-bold text-primary">50+</span>
                         <div class="stat-label text-muted">Doanh Nghiệp Đối Tác</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="stat-item card h-100 border-0 shadow-sm text-center p-4 animate-card">
-                        <span class="stat-number display-4 fw-bold text-primary"><?= $stats['projects_count'] ?>+</span>
+                        <span class="stat-number display-4 fw-bold text-primary">100+</span>
                         <div class="stat-label text-muted">Dự Án Khởi Nghiệp</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="stat-item card h-100 border-0 shadow-sm text-center p-4 animate-card">
-                        <span class="stat-number display-4 fw-bold text-primary"><?= $stats['success_rate'] ?>%</span>
+                        <span class="stat-number display-4 fw-bold text-primary">95%</span>
                         <div class="stat-label text-muted">Tỷ Lệ Thành Công</div>
                     </div>
                 </div>

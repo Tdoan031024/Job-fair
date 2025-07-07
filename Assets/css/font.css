@@ -1,6 +1,6 @@
 /* Định nghĩa font mặc định cho toàn bộ trang */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
 }
@@ -12,7 +12,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', Helvetica, sans-serif;
     font-weight: 700;
 }
 
@@ -25,14 +25,14 @@ button,
 input,
 textarea,
 label {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
 }
 
 /* Đảm bảo font đồng bộ cho các phần tử cụ thể trong hero-section */
 .hero-title,
 .hero-subtitle,
 .hero-btn {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', Helvetica, sans-serif;
 }
 
 /* Font cho các card trong events-section và companies-section */
@@ -40,33 +40,33 @@ label {
 .event-meta,
 .company-meta,
 .company-tags {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
 }
 
 /* Font cho nút và badge */
 .btn,
 .badge {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
 }
 
 /* Font cho các biểu tượng và văn bản trong stats-section */
 .stat-icon,
 .stat-number,
 .stat-label {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
 }
 
 /* Font cho section tiêu đề */
 .section-title h2 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', Helvetica, sans-serif;
 }
 
 /* Font cho cta-section */
 .cta-title {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', Helvetica, sans-serif;
 }
 
 .cta-description,
 .cta-btn {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
 }
