@@ -3,7 +3,7 @@ class Database {
     private $host = "localhost";
     private $db_name = "event_db";
     private $username = "root";
-    private $password = "123456";
+    private $password = "";
     public $conn;
 
     public function getConnection() {
