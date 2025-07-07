@@ -51,11 +51,7 @@
 }
 
 .hero-title {
-    font-size: 4rem;
-    font-weight: 800;
     margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-    animation: fadeInUp 1s ease-out;
     background: rgba(255, 255, 255, 0.1);
     padding: 25px 50px;
     border-radius: 20px;
@@ -63,7 +59,6 @@
     backdrop-filter: blur(12px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
 }
 
 .hero-title:hover {
@@ -73,10 +68,7 @@
 }
 
 .hero-subtitle {
-    font-size: 1.8rem;
     margin-bottom: 2.5rem;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-    animation: fadeInUp 1s ease-out 0.3s both;
     background: rgba(255, 255, 255, 0.1);
     padding: 15px 35px;
     border-radius: 15px;
@@ -84,7 +76,6 @@
     backdrop-filter: blur(10px);
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
 }
 
 .hero-subtitle:hover {
@@ -100,14 +91,10 @@
 .hero-btn {
     padding: 18px 40px;
     border-radius: 50px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
     transition: all 0.3s ease;
     margin: 0 15px 15px 0;
     display: inline-block;
     text-decoration: none;
-    font-family: 'Inter', sans-serif;
 }
 
 .hero-btn-primary {
@@ -205,7 +192,6 @@
 .floating-icon {
     position: absolute;
     color: rgba(255, 255, 255, 0.2);
-    font-size: 2.5rem;
     animation: float 7s ease-in-out infinite;
 }
 
@@ -267,11 +253,11 @@
 
 @keyframes glow {
     from {
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
 
     to {
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
     }
 }
 
@@ -293,7 +279,6 @@
     display: block;
 }
 
-
 /* Events Section */
 .events-section {
     background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
@@ -306,7 +291,8 @@
 }
 
 .event-card:hover {
-    transform: translateY(-5px);
+    transform: inherit;
+    /* Giữ nguyên vì không liên quan đến font */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -342,17 +328,14 @@
 }
 
 .card-title {
-    font-size: 1.25rem;
     color: #333;
 }
 
 .event-meta {
-    font-size: 0.9rem;
     color: #6c757d;
 }
 
 .card-text {
-    font-size: 0.95rem;
     line-height: 1.6;
 }
 
@@ -360,7 +343,6 @@
     background-color: #007bff;
     border-color: #007bff;
     border-radius: 5px;
-    font-weight: 500;
 }
 
 .btn-primary:hover {
@@ -370,7 +352,6 @@
 
 .btn-outline-primary {
     border-width: 2px;
-    font-weight: 500;
     transition: all 0.3s ease;
 }
 
@@ -427,18 +408,15 @@
 }
 
 .card-title {
-    font-size: 1.25rem;
     color: #333;
 }
 
 .company-meta {
-    font-size: 0.9rem;
     color: #6c757d;
     margin-bottom: 0.5rem;
 }
 
 .company-tags .badge {
-    font-size: 0.85rem;
     padding: 0.5em 1em;
 }
 
@@ -446,7 +424,6 @@
     background-color: #007bff;
     border-color: #007bff;
     border-radius: 5px;
-    font-weight: 500;
 }
 
 .btn-primary:hover {
@@ -456,7 +433,6 @@
 
 .btn-outline-primary {
     border-width: 2px;
-    font-weight: 500;
     transition: all 0.3s ease;
 }
 
@@ -474,17 +450,12 @@
 }
 
 .cta-title {
-    font-size: 3rem;
-    font-weight: 800;
     margin-bottom: 25px;
-    font-family: 'Inter', sans-serif;
 }
 
 .cta-description {
-    font-size: 1.4rem;
     margin-bottom: 50px;
     opacity: 0.9;
-    font-family: 'Inter', sans-serif;
 }
 
 .cta-btn {
@@ -493,13 +464,9 @@
     border: none;
     padding: 18px 50px;
     border-radius: 50px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
-    font-family: 'Inter', sans-serif;
 }
 
 .cta-btn:hover {
@@ -528,7 +495,6 @@
     background: linear-gradient(135deg, #3b82f6, #1e3a8a);
     border: none;
     color: white;
-    font-size: 1.8rem;
     cursor: pointer;
     box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
     transition: all 0.3s ease;
@@ -582,8 +548,6 @@
     color: white;
     padding: 12px 20px;
     border-radius: 30px;
-    font-size: 1rem;
-    font-weight: 600;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateX(25px);
@@ -641,7 +605,6 @@
     right: 25px;
     background: none;
     border: none;
-    font-size: 1.8rem;
     color: #6b7280;
     cursor: pointer;
     transition: color 0.3s ease;
@@ -652,14 +615,11 @@
 }
 
 .contact-modal-title {
-    font-size: 2rem;
-    font-weight: 800;
     color: #1e3a8a;
     margin-bottom: 30px;
     text-align: center;
     border-bottom: 3px solid #3b82f6;
     padding-bottom: 20px;
-    font-family: 'Inter', sans-serif;
 }
 
 .contact-modal-item {
@@ -688,7 +648,6 @@
     justify-content: center;
     margin-right: 20px;
     color: white;
-    font-size: 1.5rem;
     flex-shrink: 0;
 }
 
@@ -698,17 +657,12 @@
 }
 
 .contact-modal-info h4 {
-    font-size: 1.2rem;
-    font-weight: 700;
     margin-bottom: 8px;
-    font-family: 'Inter', sans-serif;
 }
 
 .contact-modal-info p {
-    font-size: 1rem;
     margin: 0;
     opacity: 0.9;
-    font-family: 'Inter', sans-serif;
 }
 
 .contact-form-btn {
@@ -717,8 +671,6 @@
     border: none;
     padding: 18px 40px;
     border-radius: 30px;
-    font-weight: 700;
-    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
@@ -765,25 +717,13 @@
 /* Responsive */
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 3rem;
         padding: 20px 30px;
         border: 2px solid rgba(255, 255, 255, 0.5);
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
     }
 
     .hero-subtitle {
-        font-size: 1.5rem;
         padding: 15px 25px;
         border: 1px solid rgba(255, 255, 255, 0.4);
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-    }
-
-    .section-title h2 {
-        font-size: 2.5rem;
-    }
-
-    .cta-title {
-        font-size: 2.5rem;
     }
 
     .slider-nav {
@@ -798,7 +738,6 @@
     .contact-button {
         width: 60px;
         height: 60px;
-        font-size: 1.5rem;
     }
 
     .contact-tooltip {
@@ -813,7 +752,6 @@
 
     .contact-form-btn {
         padding: 15px 30px;
-        font-size: 1rem;
         min-width: auto;
     }
 
@@ -825,40 +763,19 @@
     .contact-modal-icon {
         width: 40px;
         height: 40px;
-        font-size: 1.2rem;
         margin-right: 15px;
-    }
-
-    .contact-modal-info h4 {
-        font-size: 1rem;
-    }
-
-    .contact-modal-info p {
-        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2.5rem;
         padding: 15px 25px;
         border: 2px solid rgba(255, 255, 255, 0.6);
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
         padding: 12px 20px;
         border: 1px solid rgba(255, 255, 255, 0.5);
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
-    }
-
-    .section-title h2 {
-        font-size: 2rem;
-    }
-
-    .cta-title {
-        font-size: 2rem;
     }
 }
 
@@ -883,5 +800,3 @@
         opacity: 1;
     }
 }
-
-/*  */

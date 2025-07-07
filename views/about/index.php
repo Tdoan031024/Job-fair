@@ -1,7 +1,6 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-session_start(); // Khởi động session
 include '../views/layouts/header.php';
 ?>
 <link rel="stylesheet" href="../assets/css/about.css">

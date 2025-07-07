@@ -1,9 +1,6 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/error_log.txt');
-session_start();
+//session_start();
 include '../views/layouts/header.php';
 ?>
 
@@ -108,7 +105,7 @@ include '../views/layouts/header.php';
                     <!-- Hình ảnh banner -->
                     <div class="event-banner position-relative">
                         <?php if (!empty($row['banner'])): ?>
-                        <img src="../Assets/images/<?php echo htmlspecialchars($row['banner']); ?>"
+                        <img src="../Assets/images/Event/<?php echo htmlspecialchars($row['banner']); ?>"
                             class="card-img-top event-img" alt="<?php echo htmlspecialchars($row['event']); ?>">
                         <?php else: ?>
                         <img src="../Assets/images/default-event.jpg" class="card-img-top event-img"
@@ -193,10 +190,8 @@ include '../views/layouts/header.php';
                                 class="badge bg-primary me-2"><?php echo htmlspecialchars($row['ten_linh_vuc']); ?></span>
                             <span class="badge bg-secondary"><?php echo htmlspecialchars($row['quy_mo']); ?></span>
                         </div>
-                        <button class="btn btn-primary mt-auto view-detail"
-                            data-id="<?php echo htmlspecialchars($row['id']); ?>">
-                            <i class="fa fa-info-circle me-2"></i>Xem chi tiết
-                        </button>
+                        <a href="index.php?page=view_company&id=<?php echo $row['id'] ?>" class="btn btn-primary">Xem
+                            chi tiết</a>
                     </div>
                 </div>
             </div>
@@ -251,7 +246,7 @@ include '../views/layouts/header.php';
     <div class="container">
         <h2 class="cta-title">Sẵn Sàng Cho Tương Lai?</h2>
         <p class="cta-description">Tham gia ngày hội việc làm để khám phá cơ hội nghề nghiệp mơ ước</p>
-        <a href="index.php?page=registration" class="cta-btn">Đăng Ký Ngay</a>
+        <a href="index.php?page=login" class="cta-btn">Đăng Ký Ngay</a>
     </div>
 </section>
 

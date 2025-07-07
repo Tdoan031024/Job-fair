@@ -3,8 +3,13 @@
 // Start output buffering
 ob_start();
 
+// Khởi tạo session nếu chưa có
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Database connection
-require_once '../config/database.php';
+require_once '../config/connect_database.php';
 try {
     $db = (new Database())->getConnection();
 } catch (Exception $e) {
@@ -13,8 +18,8 @@ try {
 
 // System name with sanitization
 $systemName = isset($_SESSION['system']['name']) ? htmlspecialchars($_SESSION['system']['name']) : 'HUIT IEC';
-$loggedIn = isset($_SESSION['user']);
-$username = $loggedIn ? htmlspecialchars($_SESSION['user']['name']) : '';
+$loggedIn = isset($_SESSION['user_id']);
+$username = isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : '';
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +52,9 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['user']['name']) : '';
 
     <!-- Custom CSS -->
     <link href="../assets/css/styles.css" rel="stylesheet">
-    <link href="../assets/css/header.css" rel="stylesheet"> <!-- Thêm liên kết CSS -->
+    <link href="../assets/css/header.css" rel="stylesheet">
+    <link href="../assets/css/profile-icon.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -55,7 +62,7 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['user']['name']) : '';
     <nav class="navbar navbar-expand-lg custom-navbar fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="./index.php" style="margin-left: -40px;">
-                <img src="../assets/images/companies_logo/logoiec.jpg" alt="Logo" width="250" class="mr-3">
+                <img src="../assets/images/IEC/logoiec.jpg" alt="Logo" width="250" class="mr-3">
                 <!-- <span class="brand-text"><?php echo $systemName; ?></span> -->
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -73,13 +80,10 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['user']['name']) : '';
                         <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'event') ? 'active' : ''; ?>"
                             href="index.php?page=event">Sự kiện</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'companies') ? 'active' : ''; ?>"
                             href="index.php?page=companies">Doanh nghiệp</a>
                     </li>
-
-
                     <li class="nav-item">
                         <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] === 'about') ? 'active' : ''; ?>"
                             href="index.php?page=about">Giới thiệu</a>
@@ -90,27 +94,43 @@ $username = $loggedIn ? htmlspecialchars($_SESSION['user']['name']) : '';
                     </li>
                 </ul>
 
-                <!-- Login / Logout button -->
+                <!-- Login / Profile icon -->
                 <ul class="navbar-nav ml-3">
                     <?php if ($loggedIn): ?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" id="userDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            👤 Xin chào, <?php echo $username; ?>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link profile-icon" href="index.php?page=profile" title="Trang cá nhân">
+                            <i class="fas fa-user-circle"></i>
+
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="index.php?page=profile">Hồ sơ cá nhân</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="logout.php">Đăng xuất</a>
-                        </div>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <span class="username ml-2"><?php echo $username; ?></span>
                     </li>
                     <?php else: ?>
                     <li class="nav-item">
-                        <a class="btn btn-warning btn-sm ml-lg-2" href="login.php">Đăng nhập</a>
+                        <a class="btn btn-warning btn-sm ml-lg-2" href="index.php?page=login">Đăng nhập</a>
                     </li>
                     <?php endif; ?>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <script>
+    window.addEventListener('load', function() {
+        adjustContentPadding();
+    });
+    window.addEventListener('resize', function() {
+        adjustContentPadding();
+    });
+
+    function adjustContentPadding() {
+        const header = document.querySelector('.custom-navbar');
+        const content = document.querySelector('body');
+        const headerHeight = header.offsetHeight;
+        content.style.paddingTop = `${headerHeight}px`;
+    }
+    </script>
 </body>
+
+</html>

@@ -6,26 +6,27 @@
 <footer class="footer">
     <div class="container">
         <div class="row text-center text-md-left align-items-start">
-            <!-- Cột 1: Logo + giới thiệu + liên hệ -->
+
             <div class="col-md-4 mb-4">
-                <img src="../assets/images/companies_logo/logoiec.jpg" alt="Logo" width="250" class="mr-3">
+                <img src="../assets/images/IEC/logoiec.jpg" alt="Logo" width="250" class="mr-3">
                 <p class="mt-3">Nền tảng kết nối sinh viên với doanh nghiệp, việc làm và các sự kiện hướng nghiệp tại
                     HUIT.</p>
-                <div class="social-links mt-3">
-                    <a href="#" class="facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
-                <!-- Lùi phần liên hệ xuống một chút -->
                 <div class="mt-4 pt-2">
                     <p><i class="fas fa-map-marker-alt mr-2"></i> Số 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú,
                         TP.HCM, Vietnam</p>
                     <p><i class="fas fa-envelope mr-2"></i> hotrosinhvien@hufi.edu.vn</p>
                     <p><i class="fas fa-phone-alt mr-2"></i> 096 362 11 24</p>
                 </div>
+
+                <div class="social-links mt-3">
+                    <a href="https://www.facebook.com/hotrosinhvienssc.huit" class="facebook" aria-label="Facebook"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
             </div>
 
-            <!-- Cột 2: Google Map -->
+
             <div class="col-md-4 mb-4">
                 <h4 class="mb-3">Bản đồ</h4>
                 <div class="map-responsive">
@@ -36,7 +37,6 @@
                 </div>
             </div>
 
-            <!-- Cột 3: Fanpage -->
             <div class="col-md-4 mb-4">
                 <h4 class="mb-3">Fanpage</h4>
                 <div class="fb-page" data-href="https://www.facebook.com/hotrosinhvienssc.huit" data-tabs="timeline"
@@ -54,12 +54,10 @@
         </div>
     </div>
 
-    <!-- Nút cuộn lên đầu trang -->
     <button id="backToTop" title="Lên đầu trang">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Floating Contact Button -->
     <div class="floating-contact">
         <button class="contact-button" onclick="openContactModal()">
             <i class="fas fa-comments"></i>
@@ -67,7 +65,6 @@
         <div class="contact-tooltip">Liên hệ với chúng tôi</div>
     </div>
 
-    <!-- Contact Modal -->
     <div class="contact-modal" id="contactModal">
         <div class="contact-modal-content">
             <button class="contact-modal-close" onclick="closeContactModal()">
@@ -117,8 +114,22 @@
     </div>
 </footer>
 
-<!-- Facebook SDK -->
-<div id="fb-root"></div>
+
+<div class="col-md-4 mb-4">
+    <h4 class="mb-3">Fanpage</h4>
+    <div class="fb-page" data-href="https://www.facebook.com/hotrosinhvienssc.huit" data-tabs="timeline"
+        data-width="340" data-height="220" data-small-header="false" data-adapt-container-width="true"
+        data-hide-cover="false" data-show-facepile="true">
+        <blockquote cite="https://www.facebook.com/hotrosinhvienssc.huit" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/hotrosinhvienssc.huit">HUIT SSC Fanpage</a>
+        </blockquote>
+    </div>
+</div>
+
+</body>
+
+</html>
+
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0"
     nonce="fbpageload"></script>
 
@@ -127,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const backToTopBtn = document.getElementById("backToTop");
     const contactBtn = document.querySelector(".contact-button");
 
-    // Xử lý hiển thị/ẩn nút cuộn lên đầu trang
     window.addEventListener("scroll", function() {
         if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
             backToTopBtn.style.display = "block";
@@ -136,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Xử lý cuộn lên đầu trang
     backToTopBtn.addEventListener("click", function() {
         window.scrollTo({
             top: 0,
@@ -144,13 +153,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Hiệu ứng pulse cho nút liên hệ
     setTimeout(function() {
         contactBtn.classList.add('pulse');
     }, 3000);
 });
 
-// Xử lý mở modal liên hệ
 function openContactModal() {
     document.getElementById('contactModal').classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -159,21 +166,18 @@ function openContactModal() {
     }, 1000);
 }
 
-// Xử lý đóng modal liên hệ
 function closeContactModal() {
     document.getElementById('contactModal').classList.remove('show');
     document.body.style.overflow = 'auto';
     document.querySelector('.contact-form-btn').classList.remove('pulse');
 }
 
-// Đóng modal khi click bên ngoài
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('contact-modal')) {
         closeContactModal();
     }
 });
 
-// Đóng modal khi nhấn phím Escape
 document.addEventListener('keyup', function(e) {
     if (e.key === 'Escape') {
         closeContactModal();
